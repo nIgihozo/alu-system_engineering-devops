@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>404 - Page Not Found</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Anton&family=Open+Sans:wght@400;700&display=swap");
+        
+        :root {
+            --primary-color: #0077ff;
+            --secondary-color: #ff4500;
+            --text-color: #ddd;
+            --bg-color: #1a1a1a;
+        }
+        
+        body {
+            background-color: var(--bg-color);
+            font-family: "Open Sans", sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: var(--text-color);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        main {
+            padding: 2rem;
+            max-width: 600px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+        
+        h1 {
+            font-family: "Anton", sans-serif;
+            text-transform: uppercase;
+            color: var(--primary-color);
+            font-size: 5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            animation: glitch 1s linear infinite;
+        }
+        
+        @keyframes glitch {
+            2%, 64% {
+                transform: translate(2px, 0) skew(0deg);
+            }
+            4%, 60% {
+                transform: translate(-2px, 0) skew(0deg);
+            }
+            62% {
+                transform: translate(0, 0) skew(5deg);
+            }
+        }
+        
+        p {
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            text-align: center;
+        }
+        
+        .home-link {
+            display: inline-block;
+            font-family: "Anton", sans-serif;
+            text-transform: uppercase;
+            font-size: 1.2rem;
+            color: #fff;
+            background-color: var(--primary-color);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .home-link:hover {
+            background-color: var(--secondary-color);
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 119, 255, 0.4);
+        }
+        
+        .home-link::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: rotate(45deg);
+            z-index: -1;
+            transition: all 0.3s ease;
+        }
+        
+        .home-link:hover::before {
+            left: 100%;
+        }
+        
+        .error-list {
+            text-align: left;
+            display: inline-block;
+            padding-left: 20px;
+        }
+        
+        .error-list li {
+            margin-bottom: 10px;
+            position: relative;
+        }
+        
+        .error-list li::before {
+            content: "•";
+            color: var(--secondary-color);
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+        }
+        
+        .background-text {
+            position: absolute;
+            font-family: "Anton", sans-serif;
+            font-size: 10vw;
+            color: rgba(255, 255, 255, 0.03);
+            white-space: nowrap;
+            transform: rotate(-45deg);
+            pointer-events: none;
+            user-select: none;
+            animation: scroll 20s linear infinite;
+        }
+        
+        @keyframes scroll {
+            0% {
+                transform: translateX(-50%) rotate(-45deg);
+            }
+            100% {
+                transform: translateX(50%) rotate(-45deg);
+            }
+        }
+        
+        .glitch-container {
+            position: relative;
+        }
+        
+        .glitch-container::before,
+        .glitch-container::after {
+            content: "404 - Page Not Found";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            overflow: hidden;
+            background: var(--bg-color);
+        }
+        
+        .glitch-container::before {
+            left: 2px;
+            text-shadow: -1px 0 red;
+            animation: glitch-effect 2s infinite linear alternate-reverse;
+        }
+        
+        .glitch-container::after {
+            left: -2px;
+            text-shadow: -1px 0 blue;
+            animation: glitch-effect 3s infinite linear alternate-reverse;
+        }
+        
+        @keyframes glitch-effect {
+            0% {
+                clip: rect(44px, 9999px, 56px, 0);
+            }
+            5% {
+                clip: rect(12px, 9999px, 33px, 0);
+            }
+            10% {
+                clip: rect(54px, 9999px, 98px, 0);
+            }
+            15% {
+                clip: rect(82px, 9999px, 59px, 0);
+            }
+            20% {
+                clip: rect(63px, 9999px, 34px, 0);
+            }
+            25% {
+                clip: rect(34px, 9999px, 12px, 0);
+            }
+            30% {
+                clip: rect(86px, 9999px, 4px, 0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-text">Ceci n'est pas une page</div>
+    <main>
+        <div class="glitch-container">
+            <h1>404 - Page Not Found</h1>
+        </div>
+        <p>
+            Oops! It seems like you've ventured into uncharted territory. Don't worry, we'll help you find your way back!
+        </p>
+        <p>The following issues might be at play:</p>
+        <ul class="error-list">
+            <li>The link you followed is broken or outdated</li>
+            <li>This page never existed in our digital realm</li>
+            <li>This page has been removed or relocated</li>
+            <li>You've discovered a glitch in the matrix</li>
+        </ul>
+        <a href="/" class="home-link">Return to Eva's home</a>
+    </main>
+    <script>
+        document.addEventListener('mousemove', (e) => {
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            document.body.style.setProperty('--mouse-x', x);
+            document.body.style.setProperty('--mouse-y', y);
+        });
+    </script>
+</body>
+</html>
