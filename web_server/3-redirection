@@ -12,7 +12,7 @@ sudo ufw allow 'Nginx HTTP'
 echo "Holberton School for the win! :)" > /var/www/html/index.html
 
 string_for_replacement="server_name _;\n\trewrite ^\/redirect_me https:\/\/www.github.com\ nIgihozo permanent;"
-sudo sed -i "s/server_name _;/$string_for_replacement/" /etc/nginx/sites-enabled/default
+sed -i "s/server_name _;/$string_for_replacement/" /etc/nginx/sites-enabled/default
 
 # Restart Nginx service without using 'systemctl'
 sudo service nginx start
