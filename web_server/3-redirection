@@ -11,8 +11,14 @@ sudo ufw allow 'Nginx HTTP'
 # This ensures a GET request to the path returns the required string
 echo "Holberton School for the win! :)" > /var/www/html/index.html
 
-# Insert the rewrite rule BEFORE the closing brace of the server block.
-sed -i "/}/i \ \ \ \ $REDIRECTION_RULE" /etc/nginx/sites-enabled/default
+# Define the new location block structure
+REDIRECTION_BLOCK="
+\tlocation /redirect_me {
+\t\treturn 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
+\t}"
+
+# Use sed to insert the new location block right after 'server_name _;'
+sed -i "/server_name _;/a $REDIRECTION_BLOCK" /etc/nginx/sites-enabled/default
 
 # Restart Nginx service without using 'systemctl'
 sudo service nginx start
