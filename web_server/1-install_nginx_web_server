@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# Installs nginx server
+
+# Update package lists non-interactively
+sudo apt-get update
+
+# Install Nginx web srver non-interactively
+sudo apt-get -y install nginx
+sudo ufw allow 'Nginx HTTP'
+
+# This ensures a GET request to the path returns the required string
+sudo echo "Holberton School :)" > /var/www/html/index.html
+
+# Rester Nginx service without using 'systemctl'
+sudo service nginx start
