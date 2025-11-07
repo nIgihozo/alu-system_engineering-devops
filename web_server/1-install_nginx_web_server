@@ -2,18 +2,14 @@
 # Installs nginx server
 
 # Update package lists non-interactively
-apt-get update
+sudo apt-get update
 
 # Install Nginx web srver non-interactively
-apt-get -y install nginx
-
-# Use sed to ensure Nginx listens on port 80 by replacing any occurrence of '8080' with '80'
-# in the default configuration file. This is crucial for passing the port requirement.
-sed -i 's/listen 8080/listen 80/g' /etc/nginx/sites-enabled/default
-sed -i 's/listen \[::]:8080/listen \[::]:80/g' /etc/nginx/sites-enabled/default
+sudo apt-get -y install nginx
+sudo ufw allow 'Nginx HTTP'
 
 # This ensures a GET request to the path returns the required string
-echo "Holberton School :)" > /var/www/html/index.html
+sudo echo "Holberton School :)" > /var/www/html/index.html
 
 # Rester Nginx service without using 'systemctl'
-service nginx start
+sudo service nginx start
