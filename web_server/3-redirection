@@ -8,10 +8,10 @@ sudo apt-get update
 sudo apt-get -y install nginx
 sudo ufw allow 'Nginx HTTP'
 
-echo "This is Igihozo from Holberton School :)" | sudo tee /var/www/html/index.html > /dev/null
+echo "Holberton School for the win!" | sudo tee /var/www/html/index.html > /dev/null
 
-string_for_replacement="server_name _;\n\trewrite ^\/redirect_me https:\/\/www.github.com\/nIgihozo permanent;"
-sudo sed -i "s/server_name _;/$string_for_replacement/" /etc/nginx/sites-enabled/default
+# Insert redirect block after server_name
+sudo sed -i '/server_name _;/a \\n\tlocation /redirect_me {\n\t\treturn 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;\n\t}' /etc/nginx/sites-available/default
 
 # Restart Nginx service without using 'systemctl'
 sudo service nginx start
