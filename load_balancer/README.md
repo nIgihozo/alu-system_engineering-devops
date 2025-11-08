@@ -40,14 +40,10 @@ Run multiple times to verify round-robin and header:
 ## bash
 curl -sI http://<LB_IP> | grep X-Served-By
 ## Expected alternating output:
-X-Served-By:  Then your user name of your server
-X-Served-By:
+- X-Served-By:  Then your user name of your server
+- X-Served-By:
 # Code
-X-Served-By: Your server name
-X-Served-By:  Your server name
+- X-Served-By: Your server name
+- X-Served-By:  Your server name
 ## Author
 Nyiramanzi Igihozo
-
-
-
-Let me know when you're ready to start your next project — I can help you scaffol
