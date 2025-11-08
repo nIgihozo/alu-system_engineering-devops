@@ -1,22 +1,22 @@
 #!/usr/bin/env bash
-# Configures a fresh Ubuntu server to serve a custom Nginx header with its hostname
-
-# Ignore SC2154 for Shellcheck
-# shellcheck disable=SC2154
+# Configure Nginx with custom HTTP header
 
 # Update and install Nginx
-apt-get update -y
-apt-get install nginx -y
+sudo apt update -y
+sudo apt install nginx -y
 
-# Get the hostname
-HOSTNAME=$(hostname)
+# code to add header to display hostname
+string_for_replacement="server_name _;\n\tadd_header X-Served-By \$hostname;"
+sudo sed -i "s/server_name _;/$string_for_replacement/" /etc/nginx/sites-enabled/default
 
-# Inject custom header into Nginx default config
-CONFIG="/etc/nginx/sites-available/default"
-if ! grep -q "add_header X-Served-By" "$CONFIG"; then
-  sed -i "/^\s*location \/ {/a \        add_header X-Served-By \"$HOSTNAME\";" "$CONFIG"
+# Test Nginx configuration
+sudo nginx -t
+
+# If the test is successful, restart Nginx
+if [ $? -eq 0 ]; then
+    sudo service nginx restart
+    echo "Nginx configuration updated and restarted successfully."
+else
+    echo "Nginx configuration test failed. Please check the configuration."
+    exit 1
 fi
-
-# Restart Nginx
-systemctl restart nginx
-
