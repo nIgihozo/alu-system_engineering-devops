@@ -1,22 +1,41 @@
 #!/usr/bin/env bash
-# Configure Nginx with custom HTTP header
+# Script: 0-custom_http_response_header
+# Description: Installs Nginx and configures a custom X-Served-By header with the server's hostname.
+# Required for the load balancer project setup.
 
-# Update and install Nginx
-sudo apt update -y
-sudo apt install nginx -y
+# 1. Update package lists and install Nginx.
+apt-get -y update
+apt-get -y install nginx
 
-# code to add header to display hostname
-string_for_replacement="server_name _;\n\tadd_header X-Served-By \$hostname;"
-sudo sed -i "s/server_name _;/$string_for_replacement/" /etc/nginx/sites-enabled/default
+# 2. Get the hostname of the server. The shell variable $HOSTNAME will contain the correct value.
+SERVER_HOSTNAME=$(hostname)
 
-# Test Nginx configuration
-sudo nginx -t
+# 3. Overwrite the default Nginx configuration file with a known-good structure
+# that includes the necessary port settings, default content, and the custom header.
+# We are overwriting to ensure a robust and clean configuration.
+cat > /etc/nginx/sites-enabled/default << EOF
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
 
-# If the test is successful, restart Nginx
-if [ $? -eq 0 ]; then
-    sudo service nginx restart
-    echo "Nginx configuration updated and restarted successfully."
-else
-    echo "Nginx configuration test failed. Please check the configuration."
-    exit 1
-fi
+    root /var/www/html;
+    index index.html index.htm;
+    server_name _;
+
+    # === CUSTOM HTTP RESPONSE HEADER REQUIREMENT ===
+    # Add the X-Served-By header with the dynamic hostname value.
+    add_header X-Served-By "$SERVER_HOSTNAME";
+    # ===============================================
+
+    location / {
+        # First attempt to serve request as file, then as directory, then fall back to displaying a 404.
+        try_files \$uri \$uri/ =404;
+    }
+}
+EOF
+
+# 4. Write the required index content (from previous web server project).
+echo "Holberton School for the win!" > /var/www/html/index.html
+
+# 5. Restart Nginx service to apply the new configuration.
+service nginx restart
