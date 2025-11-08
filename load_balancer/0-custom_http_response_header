@@ -7,12 +7,11 @@
 apt-get -y update
 apt-get -y install nginx
 
-# 2. Get the hostname of the server. The shell variable $HOSTNAME will contain the correct value.
+# 2. Get the hostname of the server. The shell variable $HOSTNAME will contain the correct value (e.g., 6904-web-01).
 SERVER_HOSTNAME=$(hostname)
 
-# 3. Overwrite the default Nginx configuration file with a known-good structure
-# that includes the necessary port settings, default content, and the custom header.
-# We are overwriting to ensure a robust and clean configuration.
+# 3. Overwrite the default Nginx configuration file with a known-good structure.
+# The add_header directive is now correctly placed inside the location / {} block.
 cat > /etc/nginx/sites-enabled/default << EOF
 server {
     listen 80 default_server;
@@ -22,12 +21,12 @@ server {
     index index.html index.htm;
     server_name _;
 
-    # === CUSTOM HTTP RESPONSE HEADER REQUIREMENT ===
-    # Add the X-Served-By header with the dynamic hostname value.
-    add_header X-Served-By "$SERVER_HOSTNAME";
-    # ===============================================
-
     location / {
+        # === CUSTOM HTTP RESPONSE HEADER REQUIREMENT (MOVED) ===
+        # The add_header directive must be inside a location block to be applied consistently.
+        add_header X-Served-By "$SERVER_HOSTNAME";
+        # =======================================================
+        
         # First attempt to serve request as file, then as directory, then fall back to displaying a 404.
         try_files \$uri \$uri/ =404;
     }
