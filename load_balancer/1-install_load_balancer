@@ -10,7 +10,7 @@ apt-get -y install haproxy
 # edit config file
 server_config=\
 "
-frontend eva-frontend
+frontend Igihozo-frontend
         bind *:80
         mode http
         default_backend Igihozo-backend
